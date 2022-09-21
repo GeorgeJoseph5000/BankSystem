@@ -1,4 +1,4 @@
-#include "server.h"
+#include "Server.h"
 extern ST_accountsDB_t AccDB[255] = { {500,"1234567899876543210"},{10000,"1234567899876543211"},{50000,"1234567899876543212"} };
 extern ST_transaction_t TransDB[255] = { 0 };
 uint16_t transactionNumbers = 0;
@@ -31,4 +31,27 @@ EN_serverError_t isAmountAvailable(ST_cardData_t* cardData,ST_terminalData_t* te
 	return tOK;
 
 
+}
+
+EN_serverError_t saveTransaction(ST_transaction_t* transData) {
+	if (transactionNumbers == 255)return SAVING_FAILED;
+	else {
+		TransDB[transactionNumbers].cardHolderData = transData->cardHolderData;
+		TransDB[transactionNumbers].terminalData = transData->terminalData;
+		TransDB[transactionNumbers].transactionSequenceNumber = transactionNumbers+59534;
+		TransDB[transactionNumbers].transState = recieveTransactionData(transData) == 0 ? APPROVED : recieveTransactionData(transData);
+		transactionNumbers++;
+		return tOK;
+	}
+}
+
+EN_serverError_t getTransaction(uint32_t transactionSequenceNumber, ST_transaction_t* transData){ 
+	for (int i = 0; i < transactionNumbers; i++)
+{
+	if (TransDB[i].transactionSequenceNumber == transactionSequenceNumber) {
+		transData = &TransDB[i];
+		return tOK;
+	}
+}
+return TRANSACTION_NOT_FOUND;
 }
