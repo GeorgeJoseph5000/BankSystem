@@ -1,6 +1,6 @@
 # BankSystem
 
-## TEST CASES
+## VIDEOS AND SCREENSHOTS
 https://drive.google.com/drive/folders/1lyQakGf9i_5RgYwDsBU1MCIBnMtnlmSW?usp=sharing
 
 ## Program Flow Chart
