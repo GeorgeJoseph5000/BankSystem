@@ -24,26 +24,27 @@ EN_cardError_t getCardExpiryDate(ST_cardData_t* cardData) {
 
 	if (cardData->cardExpirationDate[2] != '/')
 		return WRONG_EXP_DATE;
-		int monthINT = 0;
-		int yearINT = 0;
-		char month[2] = { cardData->cardExpirationDate[0], cardData->cardExpirationDate[1] };
-		char year[2] = { cardData->cardExpirationDate[3], cardData->cardExpirationDate[4] };
 
-		sscanf(month, "%d", &monthINT);
-		sscanf(year, "%d", &yearINT);
+	int monthINT = 0;
+	int yearINT = 0;
+	char month[2] = { cardData->cardExpirationDate[0], cardData->cardExpirationDate[1] };
+	char year[2] = { cardData->cardExpirationDate[3], cardData->cardExpirationDate[4] };
 
-		if (monthINT <= 0 || monthINT > 12) {
-			return WRONG_EXP_DATE;
-		}
+	sscanf(month, "%d", &monthINT);
+	sscanf(year, "%d", &yearINT);
 
-		time_t t = time(NULL);
-		struct tm tm = *localtime(&t);
+	if (monthINT <= 0 || monthINT > 12) {
+		return WRONG_EXP_DATE;
+	}
 
-		if (yearINT < tm.tm_year || year >(tm.tm_year + MAXIMUM_EXPIRY_YEARS)) {
-			return WRONG_EXP_DATE;
-		}
+	time_t t = time(NULL);
+	struct tm tm = *localtime(&t);
 
-		return OK;
+	if (yearINT < tm.tm_year || year >(tm.tm_year + MAXIMUM_EXPIRY_YEARS)) {
+		return WRONG_EXP_DATE;
+	}
+
+	return OK;
 }
 
 
