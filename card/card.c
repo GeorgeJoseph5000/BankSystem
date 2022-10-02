@@ -1,6 +1,7 @@
 #include"card.h"
 
-#include <time.h>
+
+#define CURRENT_YEAR 22
 #define MAXIMUM_EXPIRY_YEARS 20
 
 EN_cardError_t getCardHolderName(ST_cardData_t* cardData) {
@@ -34,13 +35,10 @@ EN_cardError_t getCardExpiryDate(ST_cardData_t* cardData) {
 	sscanf(year, "%d", &yearINT);
 
 	if (monthINT <= 0 || monthINT > 12) {
+		printf("%s", "George");
 		return WRONG_EXP_DATE;
-	}
 
-	time_t t = time(NULL);
-	struct tm tm = *localtime(&t);
-
-	if (yearINT < tm.tm_year || year >(tm.tm_year + MAXIMUM_EXPIRY_YEARS)) {
+	if (yearINT < CURRENT_YEAR || yearINT > (CURRENT_YEAR + MAXIMUM_EXPIRY_YEARS)) {
 		return WRONG_EXP_DATE;
 	}
 
