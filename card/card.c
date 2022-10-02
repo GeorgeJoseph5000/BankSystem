@@ -35,10 +35,9 @@ EN_cardError_t getCardExpiryDate(ST_cardData_t* cardData) {
 	sscanf(year, "%d", &yearINT);
 
 	if (monthINT <= 0 || monthINT > 12) {
-		printf("%s", "George");
 		return WRONG_EXP_DATE;
-
-	if (yearINT < CURRENT_YEAR || yearINT > (CURRENT_YEAR + MAXIMUM_EXPIRY_YEARS)) {
+	}
+	if (yearINT < CURRENT_YEAR || yearINT >(CURRENT_YEAR + MAXIMUM_EXPIRY_YEARS)) {
 		return WRONG_EXP_DATE;
 	}
 
@@ -46,16 +45,16 @@ EN_cardError_t getCardExpiryDate(ST_cardData_t* cardData) {
 }
 
 
-EN_cardError_t getCardPAN(ST_cardData_t* cardData) {
-	printf("Enter The Card Card Pan: ");
-	scanf("%s", cardData->primaryAccountNumber);
+	EN_cardError_t getCardPAN(ST_cardData_t * cardData) {
+		printf("Enter The Card Card Pan: ");
+		scanf("%s", cardData->primaryAccountNumber);
 
-	if (strlen(cardData->primaryAccountNumber) < 16 || strlen(cardData->primaryAccountNumber) > 19)
-		return WRONG_PAN;
-
-	for (uint8_t i = 0; i < strlen(cardData->primaryAccountNumber); i++) {
-		if (cardData->primaryAccountNumber[i] < '0' || cardData->primaryAccountNumber[i]>'9')
+		if (strlen(cardData->primaryAccountNumber) < 16 || strlen(cardData->primaryAccountNumber) > 19)
 			return WRONG_PAN;
+
+		for (uint8_t i = 0; i < strlen(cardData->primaryAccountNumber); i++) {
+			if (cardData->primaryAccountNumber[i] < '0' || cardData->primaryAccountNumber[i]>'9')
+				return WRONG_PAN;
 		}
-	return OK;
-}
+		return OK;
+	}
